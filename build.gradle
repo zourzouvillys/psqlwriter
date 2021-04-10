@@ -1,7 +1,10 @@
 
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
+
+group = 'io.zrz.psqlwriter'
 
 repositories {
     jcenter()
@@ -14,6 +17,31 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
+
+task configureBuildship {
+  dependsOn gradle.includedBuilds*.task(':configureBuildship')
+}
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+publishing {
+  publications {
+      mavenJava(MavenPublication) {
+          groupId = 'io.zrz.psqlwriter'
+          artifactId = 'psqlwriter'
+          version = '0.1.0'
+          from components.java
+      }
+  }
+  repositories {
+      maven {
+          url 'https://zrz-131509674320.d.codeartifact.us-west-2.amazonaws.com/maven/zrz/'
+          credentials {
+              username "aws"
+              password System.env.CODEARTIFACT_AUTH_TOKEN
+          }
+      }
+  }
 }
