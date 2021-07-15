@@ -2,12 +2,15 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'signing'
 }
 
 group = 'io.zrz.psqlwriter'
+archivesBaseName = "psqlwriter"
+version = "0.1.0"
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -26,22 +29,86 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+//task javadocJar(type: Jar) {
+//    from javadoc
+//}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+signing {
+  useGpgCmd()
+  sign configurations.archives
+}
+
+
+
+
+
+
 publishing {
+
   publications {
+  
       mavenJava(MavenPublication) {
-          groupId = 'io.zrz.psqlwriter'
-          artifactId = 'psqlwriter'
-          version = '0.1.0'
-          from components.java
+      
+        from components.java
+        
+        artifact sourcesJar {
+          classifier "sources"
+        }
+          
+        pom {      
+          name = 'psqlwriter'
+          packaging = 'jar'
+          description = 'SQL writer (postgres)'
+          url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+          scm {
+            connection = 'scm:git:https://github.com/zourzouvillys/psqlwriter.git'
+            developerConnection = 'scm:git:https://github.com/zourzouvillys/psqlwriter.git'
+            url = 'https://github.com/zourzouvillys/psqlwriter'
+          }
+          licenses {
+            license {
+              name = 'The Apache License, Version 2.0'
+              url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+          }
+          developers {
+            developer {
+              id = 'zourzouvillys'
+              name = 'Theo Zourzouvillys'
+              email = 'theo@zrz.io'
+            }
+          }          
+        } 
+        
+        
+                 
       }
+      
   }
+  
   repositories {
       maven {
-          url 'https://zrz-131509674320.d.codeartifact.us-west-2.amazonaws.com/maven/zrz/'
+          // url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+          url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
           credentials {
-              username "aws"
-              password System.env.CODEARTIFACT_AUTH_TOKEN
+              username ossrhUsername
+              password ossrhPassword
           }
       }
   }
+  
 }
