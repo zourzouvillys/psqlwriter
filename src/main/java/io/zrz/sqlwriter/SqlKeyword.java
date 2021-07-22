@@ -149,10 +149,10 @@ public enum SqlKeyword implements SqlGenerator {
   CONNECTION,
   TRUNCATE,
   ONLY,
-  
+
   OLD,
   NEW,
-  
+
   BEFORE,
   AFTER,
   DEFERRABLE,
@@ -162,12 +162,24 @@ public enum SqlKeyword implements SqlGenerator {
   STATEMENT,
   EXECUTE,
   PROCEDURE,
-  
+
   CASE,
   WHEN,
   ELSE,
-    
-;
+
+  TRANSACTION,
+  SNAPSHOT,
+  ISOLATION,
+  LEVEL,
+  READ,
+  WRITE,
+
+  SERIALIZABLE,
+  REPEATABLE,
+  COMMITED,
+  UNCOMMITED,
+
+  ;
 
   private static final Set<String> LOOKUP = Arrays.asList(values()).stream().map(x -> x.name()).collect(ImmutableSet.toImmutableSet());
 

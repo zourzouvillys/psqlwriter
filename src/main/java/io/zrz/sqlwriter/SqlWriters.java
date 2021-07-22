@@ -1713,4 +1713,32 @@ public class SqlWriters {
     };
   }
 
+  /** SET TRANSACTION SNAPSHOT '${snapshotId}' */
+
+  public static SqlGenerator setTransactionSnapshot(String snapshotId) {
+    return w -> {
+      w.writeKeyword(SqlKeyword.SET);
+      w.writeKeyword(SqlKeyword.TRANSACTION);
+      w.writeKeyword(SqlKeyword.SNAPSHOT);
+      w.writeQuotedString(snapshotId);
+    };
+  }
+
+  public static SqlGenerator beginReadOnly(IsolationLevel isolation) {
+    return w -> {
+      w.writeKeyword(SqlKeyword.BEGIN);
+      w.writeKeyword(SqlKeyword.TRANSACTION);
+      w.writeKeyword(SqlKeyword.ISOLATION);
+      w.writeKeyword(SqlKeyword.LEVEL);
+      isolation.writeTo(w);
+    };
+  }
+
+  public static SqlGenerator jsonBuildObject(Map<SqlGenerator, SqlGenerator> fields) {
+    return w -> {
+      w.writeIdent("pg_catalog", "json_build_object");
+      w.writeExprList(fields.entrySet().stream().flatMap(e -> Stream.of(e.getKey(), e.getValue())));
+    };
+  }
+
 }

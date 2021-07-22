@@ -138,24 +138,24 @@ public class SqlWriter {
     return idx + 1;
   }
 
-//  private int addParam(final BinaryParamValue param) {
-//    final int idx = params.indexOf(param);
-//    if (idx == -1) {
-//      this.params.add(param);
-//      return this.params.size();
-//    }
-//    return idx + 1;
-//  }
+  // private int addParam(final BinaryParamValue param) {
+  // final int idx = params.indexOf(param);
+  // if (idx == -1) {
+  // this.params.add(param);
+  // return this.params.size();
+  // }
+  // return idx + 1;
+  // }
 
-//  public SqlWriter writeBinaryParam(final BinaryParamValue value) {
-//    Objects.requireNonNull(value);
-//    this.spacing();
-//    Preconditions.checkArgument(!inline, "parameter can only be written when not inline");
-//    final int pnum = this.addParam(value);
-//    this.sb.append("$").append(pnum).append("");
-//    this.state = State.KW;
-//    return this;
-//  }
+  // public SqlWriter writeBinaryParam(final BinaryParamValue value) {
+  // Objects.requireNonNull(value);
+  // this.spacing();
+  // Preconditions.checkArgument(!inline, "parameter can only be written when not inline");
+  // final int pnum = this.addParam(value);
+  // this.sb.append("$").append(pnum).append("");
+  // this.state = State.KW;
+  // return this;
+  // }
 
   private int addParam(final String param) {
     final int idx = params.indexOf(param);
@@ -314,25 +314,25 @@ public class SqlWriter {
     this.state = State.NONE;
   }
 
-//  public void addTo(final QueryExecutionBuilder b) {
-//    final SimpleQuery q = new SimpleQuery(this.sb.toString(), this.params.size());
-//    b.add(q, this.params.toArray());
-//  }
-//
-//  public SimpleQuery createQuery() {
-//    return new SimpleQuery(this.sb.toString(), this.params.size());
-//  }
-//
-//  public Tuple createTuple() {
-//    return Tuple.of(createQuery(), createParameters());
-//  }
-//
-  
-//  public QueryParameters createParameters() {
-//    final DefaultParametersList p = new DefaultParametersList(this.params.size());
-//    p.setFrom(this.params.toArray());
-//    return p;
-//  }
+  // public void addTo(final QueryExecutionBuilder b) {
+  // final SimpleQuery q = new SimpleQuery(this.sb.toString(), this.params.size());
+  // b.add(q, this.params.toArray());
+  // }
+  //
+  // public SimpleQuery createQuery() {
+  // return new SimpleQuery(this.sb.toString(), this.params.size());
+  // }
+  //
+  // public Tuple createTuple() {
+  // return Tuple.of(createQuery(), createParameters());
+  // }
+  //
+
+  // public QueryParameters createParameters() {
+  // final DefaultParametersList p = new DefaultParametersList(this.params.size());
+  // p.setFrom(this.params.toArray());
+  // return p;
+  // }
 
   public void writeTextSearchRHS(final String config, final String query) {
     this.writeOperator("@@");
@@ -447,6 +447,10 @@ public class SqlWriter {
     writeExprList(items.collect(Collectors.toList()));
   }
 
+  /**
+   * write list with parens, comma separated.
+   */
+
   public void writeExprList(final List<SqlGenerator> items) {
     this.writeStartExpr();
     this.writeList(_comma, items);
@@ -500,10 +504,10 @@ public class SqlWriter {
     this.writeExprList(generators);
   }
 
-//  public Publisher<QueryResult> submitTo(final PostgresQueryProcessor db) {
-//    final QueryExecutionBuilder qb = Objects.requireNonNull(db, "missing db").executionBuilder();
-//    addTo(qb);
-//    return qb.execute();
-//  }
+  // public Publisher<QueryResult> submitTo(final PostgresQueryProcessor db) {
+  // final QueryExecutionBuilder qb = Objects.requireNonNull(db, "missing db").executionBuilder();
+  // addTo(qb);
+  // return qb.execute();
+  // }
 
 }
