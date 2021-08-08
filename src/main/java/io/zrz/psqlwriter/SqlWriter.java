@@ -1,4 +1,4 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Preconditions;
 
-import io.zrz.sqlwriter.execution.QueryParameters;
+import io.zrz.psqlwriter.execution.QueryParameters;
 
 /**
  * helper to write safeish SQL.

@@ -1,10 +1,14 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.ImmutableMap;
+
+import io.zrz.psqlwriter.DbIdent;
+import io.zrz.psqlwriter.IsolationLevel;
+import io.zrz.psqlwriter.SqlWriters;
 
 class SqlWritersTest {
 

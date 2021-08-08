@@ -5,4 +5,4 @@
  * @author theo
  *
  */
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;

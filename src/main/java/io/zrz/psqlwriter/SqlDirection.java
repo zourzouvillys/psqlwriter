@@ -1,4 +1,4 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
 public enum SqlDirection {
   ASC, DESC

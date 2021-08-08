@@ -1,7 +1,7 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
-import io.zrz.sqlwriter.execution.Query;
-import io.zrz.sqlwriter.execution.QueryParameters;
+import io.zrz.psqlwriter.execution.Query;
+import io.zrz.psqlwriter.execution.QueryParameters;
 
 /**
  * contains a pre-packaged SQL query along with parameters (if any).

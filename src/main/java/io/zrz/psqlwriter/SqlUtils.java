@@ -1,4 +1,4 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
 import java.time.Duration;
 

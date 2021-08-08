@@ -1,4 +1,4 @@
-package io.zrz.sqlwriter.execution;
+package io.zrz.psqlwriter.execution;
 
 public interface QueryParameters {
 

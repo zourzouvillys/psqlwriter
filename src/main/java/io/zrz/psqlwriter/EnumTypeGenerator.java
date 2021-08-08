@@ -1,7 +1,7 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
-import static io.zrz.sqlwriter.SqlWriters.eq;
-import static io.zrz.sqlwriter.SqlWriters.ident;
+import static io.zrz.psqlwriter.SqlWriters.eq;
+import static io.zrz.psqlwriter.SqlWriters.ident;
 
 import java.util.LinkedList;
 import java.util.List;

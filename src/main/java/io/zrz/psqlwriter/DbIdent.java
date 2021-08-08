@@ -1,4 +1,4 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
 import java.util.ArrayList;
 import java.util.List;

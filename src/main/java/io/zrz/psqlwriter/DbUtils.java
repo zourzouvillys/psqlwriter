@@ -1,9 +1,7 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
 import java.sql.SQLException;
 import java.util.Objects;
-
-import org.postgresql.core.Utils;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.BoundType;
@@ -14,30 +12,28 @@ public class DbUtils {
   private static final CharMatcher IDENT_CHARS = CharMatcher.inRange('a', 'z').or(CharMatcher.is('_')).or(CharMatcher.digit());
 
   /**
-   * returns an escaped string literal that can be included in an SQL query. The value will not contain the leading or
-   * trailing "'" .
+   * returns an escaped string literal that can be included in an SQL query. The value will not
+   * contain the leading or trailing "'" .
    */
 
   public static String escape(final String strval) {
     try {
-    	 return Utils.escapeLiteral(null, Objects.requireNonNull(strval), true).toString();
+      return PsqlUtils.escapeLiteral(null, Objects.requireNonNull(strval), true).toString();
     }
-    catch (SQLException e) {
-      // TODO Auto-generated catch block
-      throw new RuntimeException (e);
+    catch (final SQLException e) {
+      throw new RuntimeException(e);
     }
   }
 
   public static String ident(final String ident) {
-    if (IDENT_CHARS.matchesAllOf(ident) && !SqlKeyword.isKeyword(ident)) {
+    if (DbUtils.IDENT_CHARS.matchesAllOf(ident) && !SqlKeyword.isKeyword(ident)) {
       return ident;
     }
     try {
-      return Utils.escapeIdentifier(null, ident).toString();
+      return PsqlUtils.escapeIdentifier(null, ident).toString();
     }
-    catch (SQLException e) {
-      // TODO Auto-generated catch block
-      throw new RuntimeException (e);
+    catch (final SQLException e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -71,18 +67,18 @@ public class DbUtils {
       throw new IllegalArgumentException("invalid upper bound type");
     }
 
-    final String inner = content.substring(1, content.length() - 1);
+    final var inner = content.substring(1, content.length() - 1);
 
-    final String[] values = inner.split(",");
+    inner.split(",");
 
-    final int idx = inner.indexOf(',');
+    final var idx = inner.indexOf(',');
 
     if (idx == -1) {
       throw new IllegalArgumentException(String.format("invalid range: '%s' %d", inner));
     }
 
-    final String lower = inner.substring(0, idx);
-    final String upper = inner.substring(idx + 1);
+    final var lower = inner.substring(0, idx);
+    final var upper = inner.substring(idx + 1);
 
     if (lower.isEmpty()) {
 
@@ -93,21 +89,21 @@ public class DbUtils {
       return Range.upTo(Integer.parseInt(upper), upperBoundType);
 
     }
-    else if (upper.isEmpty()) {
+    if (upper.isEmpty()) {
 
       return Range.downTo(Integer.parseInt(lower), lowerBoundType);
 
     }
 
     return Range.range(
-        Integer.parseInt(lower),
-        lowerBoundType,
-        Integer.parseInt(upper),
-        upperBoundType);
+      Integer.parseInt(lower),
+      lowerBoundType,
+      Integer.parseInt(upper),
+      upperBoundType);
   }
 
   public static String toExclusivity(final Range<?> range) {
-    return lowerBoundString(range) + upperBoundString(range);
+    return DbUtils.lowerBoundString(range) + DbUtils.upperBoundString(range);
   }
 
   public static String lowerBoundString(final Range<?> range) {
@@ -142,9 +138,9 @@ public class DbUtils {
       return "(,)";
     }
 
-    final StringBuilder sb = new StringBuilder();
+    final var sb = new StringBuilder();
 
-    sb.append(lowerBoundString(range));
+    sb.append(DbUtils.lowerBoundString(range));
 
     if (range.hasLowerBound()) {
       sb.append(range.lowerEndpoint());
@@ -156,7 +152,7 @@ public class DbUtils {
       sb.append(range.upperEndpoint());
     }
 
-    sb.append(upperBoundString(range));
+    sb.append(DbUtils.upperBoundString(range));
 
     return sb.toString();
 
@@ -164,9 +160,9 @@ public class DbUtils {
 
   public static String toInt4Range(final Range<Comparable<? extends Number>> range) {
 
-    final StringBuilder sb = new StringBuilder();
+    final var sb = new StringBuilder();
 
-    sb.append(lowerBoundString(range));
+    sb.append(DbUtils.lowerBoundString(range));
 
     if (range.hasLowerBound()) {
       sb.append(range.lowerEndpoint());
@@ -178,7 +174,7 @@ public class DbUtils {
       sb.append(range.upperEndpoint());
     }
 
-    sb.append(upperBoundString(range));
+    sb.append(DbUtils.upperBoundString(range));
 
     return sb.toString();
 

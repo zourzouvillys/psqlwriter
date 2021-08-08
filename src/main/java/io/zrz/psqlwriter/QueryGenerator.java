@@ -1,6 +1,6 @@
-package io.zrz.sqlwriter;
+package io.zrz.psqlwriter;
 
-import static io.zrz.sqlwriter.SqlWriters.ident;
+import static io.zrz.psqlwriter.SqlWriters.ident;
 
 import java.util.Arrays;
 import java.util.HashMap;
